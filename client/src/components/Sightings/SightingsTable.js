@@ -7,19 +7,45 @@ const SightingsTable = ({
   deleteSighting,
   sortHealthy,
 }) => {
-  const [count, setCount] = useState(0);
+  const [showHealthy, setShowHealthy] = useState(true);
+  const [editItem, setEditItem] = useState("");
+  const [isBeingEdited, setIsBeingEdited] = useState(true);
+  const [editSpecies, setEditSpecies] = useState({});
+
+  const handleEdit = (e) => {
+    console.log(e.currentTarget.value);
+    console.log(
+      individuals.filter(
+        (individual) => individual.sighting_id === Number(e.currentTarget.value)
+      )
+    );
+    setEditSpecies(
+      individuals.filter(
+        (individual) => individual.sighting_id === Number(e.currentTarget.value)
+      )[0]
+    );
+    setEditItem(e.currentTarget.value);
+    setIsBeingEdited(true);
+  };
+
+  const edit = (childData) => {
+    console.log(childData);
+    setIsBeingEdited(childData);
+  };
+
   return (
     <>
       <thead>
         <tr>
+          <td></td>
           <td>Nickname</td>
           <td>Common Name</td>
           <td>
             Health Status
             <button
               onClick={() => {
-                setCount(count + 1);
-                sortHealthy(count % 2 === 0 ? true : false);
+                setShowHealthy((show) => !show);
+                sortHealthy(showHealthy);
               }}
             >
               <i className="fa fa-filter" aria-hidden="true"></i>
@@ -28,36 +54,50 @@ const SightingsTable = ({
           <td>Location</td>
           <td>Time Last Seen</td>
           <td>Sighter Email</td>
-          <td>Details</td>
+          <td></td>
         </tr>
       </thead>
       <tbody>
         {sightings.map((type, index) => {
-          return (
-            <tr key={index}>
-              <td>{type.nickname}</td>
-              <td>{type.common_name}</td>
-              <td>
-                {type.healthy.toString() === "true" ? "Healthy" : "Unhealthy"}
-              </td>
-              <td>{type.location}</td>
-              <td>{type.date_time.slice(0, 10)}</td>
-              <td>{type.email}</td>
-              <td>
-                <button>See More Details</button>
-              </td>
-              <td>
-                <button
-                  value={type.sighting_id}
-                  onClick={(e) => deleteSighting(e.currentTarget.value)}
-                >
-                  <i className="fa fa-trash-o"></i>
-                </button>
-              </td>
-            </tr>
-          );
+          if (Number(editItem) === type.sighting_id && isBeingEdited) {
+            return (
+              <AddSighting
+                key={index}
+                edit={edit}
+                isEdit={editItem}
+                individuals={individuals}
+                editSpecies={editSpecies}
+              />
+            );
+          } else {
+            return (
+              <tr key={index}>
+                <td>
+                  <button value={type.sighting_id} onClick={handleEdit}>
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  </button>
+                </td>
+                <td>{type.nickname}</td>
+                <td>{type.common_name}</td>
+                <td>
+                  {type.healthy.toString() === "true" ? "Healthy" : "Unhealthy"}
+                </td>
+                <td>{type.location}</td>
+                <td>{type.date_time.slice(0, 10)}</td>
+                <td>{type.email}</td>
+                <td>
+                  <button
+                    value={type.sighting_id}
+                    onClick={(e) => deleteSighting(e.currentTarget.value)}
+                  >
+                    <i className="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+            );
+          }
         })}
-        <AddSighting individuals={individuals} />
+        <AddSighting individuals={individuals} isEdit={false} />
       </tbody>
     </>
   );

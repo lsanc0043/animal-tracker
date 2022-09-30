@@ -41,7 +41,10 @@ router.post("/", async (req, res) => {
   };
   console.log(sighting);
   try {
-    const sightings = await db.any("SELECT * FROM sightings", [true]);
+    const sightings = await db.any(
+      "SELECT * FROM sightings ORDER BY sighting_id",
+      [true]
+    );
     let max = await db.one("SELECT max(sighting_id) FROM sightings");
     if (sightings.length === 0) {
       max.max = 0;
@@ -62,7 +65,37 @@ router.post("/", async (req, res) => {
     res.send(createdSighting);
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ e }); 
+    return res.status(400).json({ e });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const sighting = {
+    nickname: req.body.nickname,
+    common_name: req.body.common_name,
+    id: req.body.id,
+    healthy: req.body.healthy === "Yes" ? true : false,
+    location: req.body.location,
+    last_seen: req.body.last_seen,
+    email: req.body.email,
+    sighting_id: req.body.sighting_id,
+  };
+  console.log(sighting);
+  try {
+    await db.many(
+      "UPDATE sightings SET date_time=$1, individual_id=$2, location=$3, healthy=$4, email=$5 WHERE sighting_id=$6",
+      [
+        sighting.last_seen,
+        sighting.id,
+        sighting.location,
+        sighting.healthy,
+        sighting.email,
+        sighting.sighting_id,
+      ]
+    );
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ e });
   }
 });
 

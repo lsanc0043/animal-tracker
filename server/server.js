@@ -20,7 +20,7 @@ app.use("/sightings", sightingsRouter);
 app.get("/joinedTable", async (req, res) => {
   try {
     const allInfo = await db.any(
-      "SELECT sightings.sighting_id, individuals.id, individuals.nickname, species.common_name, species.scientific_name, species.population, species.conservation_status_code, sightings.date_time, sightings.location, sightings.healthy, sightings.email, individuals.image FROM individuals LEFT JOIN sightings ON sightings.individual_id = individuals.id LEFT JOIN species ON species.id = individuals.species_id"
+      "SELECT sightings.sighting_id, individuals.id, individuals.nickname, species.common_name, species.scientific_name, species.population, species.conservation_status_code, sightings.date_time, sightings.location, sightings.healthy, sightings.email, individuals.image FROM individuals LEFT JOIN species ON species.id = individuals.species_id LEFT JOIN sightings ON sightings.individual_id = individuals.id ORDER BY sightings.sighting_id"
     );
     res.send(allInfo);
   } catch (e) {

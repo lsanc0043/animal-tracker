@@ -4,7 +4,8 @@ import SightingsTable from "./SightingsTable";
 const Sightings = () => {
   const [individuals, setIndividuals] = useState([]);
   const [sightings, setSightings] = useState([]);
-  const [sort, setSort] = useState(false);
+  const [sortHealth, setSortHealth] = useState(false);
+  const [sortDates, setSortDate] = useState(false);
   const getIndividuals = async () => {
     const response = await fetch(`http://localhost:5000/joinedTable`);
     const data = await response.json();
@@ -13,14 +14,30 @@ const Sightings = () => {
   };
 
   const sortHealthy = (bool) => {
-    setSort(bool);
+    setSortHealth(bool);
   };
 
-  const filter = (data) => {
+  const sortDate = (bool) => {
+    setSortDate(bool);
+  };
+
+  const filter = async (data) => {
     if (data.length !== 0) {
-      const filt = data.filter((individual) => individual.sighting_id !== null);
-      setSightings(filt);
-      if (sort) {
+      if (sortDates) {
+        const response = await fetch(`http://localhost:5000/joinedTableDates`);
+        const dataDate = await response.json();
+        const filt2 = dataDate.filter(
+          (individual) => individual.sighting_id !== null
+        );
+        setSightings(filt2);
+      } else {
+        const filt = data.filter(
+          (individual) => individual.sighting_id !== null
+        );
+        setSightings(filt);
+      }
+
+      if (sortHealth) {
         setSightings(data.filter((individual) => individual.healthy === true));
       }
     }
@@ -29,7 +46,7 @@ const Sightings = () => {
   useEffect(() => {
     getIndividuals();
     // eslint-disable-next-line
-  }, [individuals, sort]);
+  }, [individuals, sortHealth, sortDates]);
 
   const deleteSighting = async (deleteId) => {
     console.log(deleteId);
@@ -51,6 +68,7 @@ const Sightings = () => {
       sightings={sightings}
       deleteSighting={deleteSighting}
       sortHealthy={sortHealthy}
+      sortDate={sortDate}
     />
   );
 };

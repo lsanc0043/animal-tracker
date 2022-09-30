@@ -6,8 +6,10 @@ const SightingsTable = ({
   sightings,
   deleteSighting,
   sortHealthy,
+  sortDate,
 }) => {
   const [showHealthy, setShowHealthy] = useState(true);
+  const [sortDates, setSortDates] = useState(true);
   const [editItem, setEditItem] = useState("");
   const [isBeingEdited, setIsBeingEdited] = useState(true);
   const [editSpecies, setEditSpecies] = useState({});
@@ -52,7 +54,20 @@ const SightingsTable = ({
             </button>
           </td>
           <td>Location</td>
-          <td>Time Last Seen</td>
+          <td>
+            Time Last Seen
+            <button
+              onClick={() => {
+                setSortDates((ascending) => !ascending);
+                sortDate(sortDates);
+              }}
+            >
+              <i
+                className={sortDates ? "fa fa-sort-amount-asc" : "fa fa-times"}
+                aria-hidden="true"
+              ></i>
+            </button>
+          </td>
           <td>Sighter Email</td>
           <td></td>
         </tr>

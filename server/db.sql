@@ -16,12 +16,35 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+DROP DATABASE IF EXISTS animaltracker;
+
+--
+-- Name: animaltracker; Type: DATABASE; Schema: -; Owner: postgres 
+--
+
+CREATE DATABASE animaltracker WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'C';
+
+ALTER DATABASE animaltracker OWNER TO postgres;
+
+\connect animaltracker
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: individuals; Type: TABLE; Schema: public; Owner: linda
+-- Name: individuals; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.individuals (
@@ -33,10 +56,10 @@ CREATE TABLE public.individuals (
 );
 
 
-ALTER TABLE public.individuals OWNER TO linda;
+ALTER TABLE public.individuals OWNER TO postgres;
 
 --
--- Name: individuals_id_seq; Type: SEQUENCE; Schema: public; Owner: linda
+-- Name: individuals_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.individuals_id_seq
@@ -48,17 +71,17 @@ CREATE SEQUENCE public.individuals_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.individuals_id_seq OWNER TO linda;
+ALTER TABLE public.individuals_id_seq OWNER TO postgres;
 
 --
--- Name: individuals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: linda
+-- Name: individuals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.individuals_id_seq OWNED BY public.individuals.id;
 
 
 --
--- Name: sightings; Type: TABLE; Schema: public; Owner: linda
+-- Name: sightings; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.sightings (
@@ -72,10 +95,10 @@ CREATE TABLE public.sightings (
 );
 
 
-ALTER TABLE public.sightings OWNER TO linda;
+ALTER TABLE public.sightings OWNER TO postgres;
 
 --
--- Name: sightings_id_seq; Type: SEQUENCE; Schema: public; Owner: linda
+-- Name: sightings_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.sightings_id_seq
@@ -87,17 +110,17 @@ CREATE SEQUENCE public.sightings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sightings_id_seq OWNER TO linda;
+ALTER TABLE public.sightings_id_seq OWNER TO postgres;
 
 --
--- Name: sightings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: linda
+-- Name: sightings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.sightings_id_seq OWNED BY public.sightings.sighting_id;
 
 
 --
--- Name: species; Type: TABLE; Schema: public; Owner: linda
+-- Name: species; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.species (
@@ -110,10 +133,10 @@ CREATE TABLE public.species (
 );
 
 
-ALTER TABLE public.species OWNER TO linda;
+ALTER TABLE public.species OWNER TO postgres;
 
 --
--- Name: species_id_seq; Type: SEQUENCE; Schema: public; Owner: linda
+-- Name: species_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.species_id_seq
@@ -125,38 +148,38 @@ CREATE SEQUENCE public.species_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.species_id_seq OWNER TO linda;
+ALTER TABLE public.species_id_seq OWNER TO postgres;
 
 --
--- Name: species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: linda
+-- Name: species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.species_id_seq OWNED BY public.species.id;
 
 
 --
--- Name: individuals id; Type: DEFAULT; Schema: public; Owner: linda
+-- Name: individuals id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.individuals ALTER COLUMN id SET DEFAULT nextval('public.individuals_id_seq'::regclass);
 
 
 --
--- Name: sightings sighting_id; Type: DEFAULT; Schema: public; Owner: linda
+-- Name: sightings sighting_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.sightings ALTER COLUMN sighting_id SET DEFAULT nextval('public.sightings_id_seq'::regclass);
 
 
 --
--- Name: species id; Type: DEFAULT; Schema: public; Owner: linda
+-- Name: species id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.species ALTER COLUMN id SET DEFAULT nextval('public.species_id_seq'::regclass);
 
 
 --
--- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: linda
+-- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.individuals (id, nickname, species_id, seen_on, image) FROM stdin;
@@ -175,7 +198,7 @@ COPY public.individuals (id, nickname, species_id, seen_on, image) FROM stdin;
 
 
 --
--- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: linda
+-- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.sightings (sighting_id, date_time, individual_id, location, healthy, email, created_on) FROM stdin;
@@ -188,7 +211,7 @@ COPY public.sightings (sighting_id, date_time, individual_id, location, healthy,
 
 
 --
--- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: linda
+-- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.species (id, common_name, scientific_name, population, conservation_status_code, created_on) FROM stdin;
@@ -203,28 +226,28 @@ COPY public.species (id, common_name, scientific_name, population, conservation_
 
 
 --
--- Name: individuals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: linda
+-- Name: individuals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.individuals_id_seq', 16, true);
 
 
 --
--- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: linda
+-- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.sightings_id_seq', 5, true);
 
 
 --
--- Name: species_id_seq; Type: SEQUENCE SET; Schema: public; Owner: linda
+-- Name: species_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.species_id_seq', 11, true);
 
 
 --
--- Name: individuals individuals_pkey; Type: CONSTRAINT; Schema: public; Owner: linda
+-- Name: individuals individuals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.individuals
@@ -232,7 +255,7 @@ ALTER TABLE ONLY public.individuals
 
 
 --
--- Name: sightings sightings_pkey; Type: CONSTRAINT; Schema: public; Owner: linda
+-- Name: sightings sightings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.sightings
@@ -240,7 +263,7 @@ ALTER TABLE ONLY public.sightings
 
 
 --
--- Name: species species_pkey; Type: CONSTRAINT; Schema: public; Owner: linda
+-- Name: species species_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.species

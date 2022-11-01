@@ -1,18 +1,105 @@
+body {
+  background-image: url("https://wallpaperaccess.com/full/775146.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.App {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1%;
+}
+
+header {
+  font-size: 70px;
+  font-family: 'Blaka Ink', cursive;
+  text-shadow: -2px 2px rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.511);
+  border-radius: 10%;
+  border: solid 5px white;
+  box-shadow: 10px 10px rgba(162, 146, 98, 0.688);
+  padding: 0% 1%;
+  margin-bottom: 2%;
+}
+
 .table {
-  /* width: 50vw; */
-  padding: 2%;
+  width: 1300px;
   text-align: center;
 }
 
+thead, .head {
+  font-size: 20px;
+  font-family: 'Rubik Dirt', cursive;
+}
+
 img {
-  width: 50px;
+  width: 300px;
 }
 
 button {
   border: none;
   background-color: white;
+  outline: none !important;
+} 
+
+button:hover {
+  background-color: rgba(236, 233, 233, 0.507);
 }
 
-.fa {
+.fa-trash-o {
   color: red;
 }
+
+.nav-bar {
+  font-size: 30px;
+  background: -webkit-linear-gradient(rgb(0, 0, 0), rgb(255, 0, 0));
+  background-clip: border-box;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding: 1%;
+  border-bottom: 0px;
+  text-shadow: -2px 1px rgb(0, 0, 0);
+  -webkit-background-clip: text;
+  -webkit-text-stroke:0.5px rgb(176, 161, 61);
+  -webkit-text-fill-color: transparent;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.nav-bar:hover {
+  -webkit-text-stroke:1px rgb(8, 72, 22);
+  background: rgba(236, 233, 233, 0.507);
+}
+
+.card {
+  opacity: 80%;
+}
+
+.nav-active {
+  pointer-events: none;
+  -webkit-text-stroke:1px rgb(8, 72, 22);
+  background: rgba(236, 233, 233, 0.507);
+}
+
+.individuals {
+  text-shadow: 0px 0px rgb(0, 0, 0);
+}
+
+.individuals:hover {
+  -webkit-text-stroke:1px rgba(132, 132, 129, 0.39);
+  background: rgba(236, 233, 233, 0.507);
+}
+
+.individuals-active {
+  text-shadow: 0px 0px rgb(255, 255, 255);
+  -webkit-text-stroke:1px rgba(42, 42, 9, 0.39);
+  background: rgba(179, 134, 134, 0.507);
+}
+
+/* span {
+  width: 50%;
+  margin: 0px 20px 0px 2px;
+} */
